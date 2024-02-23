@@ -1,0 +1,36 @@
+Excalidraw tool used for designing.
+
+Kafka uses zookeeper which is an opensource tool for managing topics and partitions in kafka broker/server
+
+In simple terms, a broker is a Kafka server running on a specific machine.
+A Kafka cluster is a group of multiple Kafka brokers working together.
+
+The term "server" is often used interchangeably with "broker." Each Kafka broker instance is essentially a Kafka server.
+
+1. Initialize zookeeper by running zookeeper on port 2181 (docker run -p 2181:2181 zookeeper) 
+    here -p port mapping 2181 port on 2181
+    docker image name is zookeeper
+
+2.  Start kafka now.
+    docker run -p 9092:9092 ^  (using '^' for line continuation since there are multpile commands)
+     -e KAFKA_ZOOKEEPER_CONNECT=<PRIVATE_IP>2181 ^  (telling kafka what port zookeeper is running)
+     -e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://<PRIVATE_IP>:9092 ^ (plaintext is the protocol and specifying what port kafka is running)
+     -e KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1 (this command is configuring the Kafka container to use a  replication factor of 1 for the internal __consumer_offsets topic.
+        The replication factor determines how many copies (replicas) of each partition of the topic should be maintained across the Kafka cluster. In this case, it's set to 1, meaning each partition will have only one replica.)
+     confluentinc/cp-kafka (name of docker image)
+
+(note: write all "2." commands in a single line in cmd prompt and dont use "^")
+
+3. Open VScode.
+    create a folder/directory where you want to work on your project (here project folder is "Apache-kafka-tutorial-project)
+    (NOTE: install and keep nvm, npm, yarn versions updated)
+    Open terminal in your project folder.
+
+4. On terminal:
+    type 'yarn init'
+    fill and 'enter' the asked details or leave blank
+    you see a package.json file created.
+    
+    then type 'yarn add kafkajs'
+
+5. You can create admin.js, producer.js and consumer.js files to control the data flow from producer to consumer.
